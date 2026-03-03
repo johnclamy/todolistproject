@@ -1,0 +1,47 @@
+@import url('https://fonts.googleapis.com/css2?family=Comfortaa:wght@300..700&display=swap');
+
+
+:root {
+    /* Colour palette */
+
+    --dark-grey: #333333;
+    --dim-grey:  #675c47;
+    --grey:      #7e7e7e;
+    --mocha:     #b5a789;
+    --maroon:    #954b4b;
+    --dusky-red: #b76666;
+    --cream:     #efe5d0;
+
+
+    /* Backgrounds */
+
+    --bg-primary-color: var(--mocha);
+    --bg-inverse-color: var(--dim-grey);
+    --bg-lighter-color: var(--cream);
+
+
+    /* Text */
+
+    --text-primary-color: var(--dark-grey);
+    --text-secondary-color: var(--dim-grey);
+    --text-light-color: var(--grey);
+    --text-font-family: 'Comfortaa', Arial, Helvetica, sans-serif;
+
+
+    /* Links */
+
+    --link-color: var(--dusky-red);
+    --link-visited-color: var(--dim-grey);
+    --link-focus-color: var(--maroon);
+    --link-hover-color: var(--maroon);
+    --link-active-color: var(--maroon);
+
+
+    /* Borders */
+
+    --border-primary-color: var(--dusky-red);
+    --border-secondary-color: var(--dim-grey);
+    --border-focus-color: var(--maroon);
+    --border-light-color: var(--grey);
+    --border-thick-size: 1px;    
+}
