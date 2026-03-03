@@ -9,10 +9,14 @@
 </head>
 <body>
    <div class="container">
-    <!-- Header goes here... -->
-    {% block content %}
-    {% endblock %}    
-    <!-- Footer goes here... -->
+        <header>
+            <a href="{% url 'default_page.index' %}">
+                <img src="{% static 'img/header.gif' %}" alt="Starbuzz Coffee Logo">
+            </a>
+        </header><!-- Header goes here... -->
+        {% block content %}
+        {% endblock %}    
+        <!-- Footer goes here... -->
    </div> 
 </body>
 </html>
