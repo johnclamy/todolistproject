@@ -8,7 +8,7 @@
     <link rel="stylesheet" href="{% static 'css/style.css' %}">
 </head>
 <body>
-   <div class="container">
+    <div class="container">
         <header>
             <a href="{% url 'default_page.index' %}">
                 <img src="{% static 'img/header.gif' %}" alt="Starbuzz Coffee Logo">
@@ -16,7 +16,10 @@
         </header><!-- Header goes here... -->
         {% block content %}
         {% endblock %}    
-        <!-- Footer goes here... -->
-   </div> 
+        <footer>
+            <p>&copy; 2005, Starbuzz Coffee</p>
+            <p>All trademarks and registered trademarks appearing on this site are the property of their respective owners.</p>      
+        </footer>
+    </div> 
 </body>
 </html>
