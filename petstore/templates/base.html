@@ -16,7 +16,21 @@
                 <a href="{% url 'core.index' %}">
                     <span class="text-red-300">Pets</span>-<span class="text-blue-300">R</span>-<span class="text-green-300">Us</span>
                 </a>
-            </h1>
+            </h1>        
+
+            <div>
+                <button id="hamburger-btn" class="text-3xl lg:hidden cursor-pointer">&#9776;</button>
+
+                <nav class="hidden lg:block space-x-8 text-xl" aria-label="Main Navigation">
+                    <a href="" class="hover:opacity-90">About</a>
+                    <a href="" class="hover:opacity-90">Shop</a>
+                    <a href="" class="hover:opacity-90">Cart</a>
+                    <a href="" class="hover:opacity-90">Contact</a>
+                    <a href="" class="hover:opacity-90">Orders</a>
+                    <a href="" class="hover:opacity-90">Login</a>
+                    <a href="" class="hover:opacity-90">Register</a>
+                </nav>
+            </div>
         </div>
     </header>
 
