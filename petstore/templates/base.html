@@ -35,6 +35,18 @@
                 </nav>
             </div>
         </div>
+
+        <div id="mobile-menu" class="absolute top-0 bg-[#1D3557] w-full text-5xl flex-col justify-content-center origin-top animate-open-menu hidden">
+            <button class="text-8xl self-end px-6">&times;</button>
+            <nav class="flex flex-col min-h-screen items-center py-8" aria-label="mobile">
+                <a href="" class="w-full text-center py-6 hover:opacity-90">About</a>
+                <a href="" class="w-full text-center py-6 hover:opacity-90">Shop</a>
+                <a href="" class="w-full text-center py-6 hover:opacity-90">Cart</a>
+                <a href="" class="w-full text-center py-6 hover:opacity-90">Orders</a>
+                <a href="#contact" class="w-full text-center py-6 hover:opacity-90">Contact</a>
+                <a href="" class="w-full text-center py-6 hover:opacity-90">Login</a>
+            </nav>
+        </div> 
     </header>
 
     <!-- Main Content -->
@@ -65,5 +77,6 @@
             </div>
         </section>
     </footer>
+    <script src="{% static 'js/main.js' %}"></script>
 </body>
 </html>
