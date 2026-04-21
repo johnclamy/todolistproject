@@ -56,6 +56,27 @@
 </section>
 
 <!-- Our Team -->
-        
+<section class="container mx-auto px-6 py-16 bg-white">
+    <div class="text-center mb-12">
+        <h2 class="text-3xl lg:text-4xl font-bold">Our Team</h2>
+        <p class="text-lg text-gray-600 mt-4">Meet the passionate individuals behind Pets-R-Us.</p>
+    </div>
+    <div class="flex flex-wrap justify-center gap-8">
+        <div class="bg-gray-100 p-6 rounded-lg shadow-md w-full sm:w-64">
+            <img src="{% static 'img/team-member1.jpg' %}" alt="Team Member 1" class="rounded-full w-32 h-32 mx-auto mb-4">
+            <h3 class="font-bold text-dark mb-2 text-center">Jane Doe</h3>
+            <p class="text-gray-600 text-center">Founder & CEO</p>
+        </div>
+        <div class="bg-gray-100 p-6 rounded-lg shadow-md w-full sm:w-64">
+            <img src="{% static 'img/team-member2.jpg' %}" alt="Team Member 2" class="rounded-full w-32 h-32 mx-auto mb-4">
+            <h3 class="font-bold text-dark mb-2 text-center">John Smith</h3>
+            <p class="text-gray-600 text-center">Head of Operations</p>
+        </div>
+        <div class="bg-gray-100 p-6 rounded-lg shadow-md w-full sm:w-64">
+            <img src="{% static 'img/team-member3.jpg' %}" alt="Team Member 3" class="rounded-full w-32 h-32 mx-auto mb-4">
+            <h3 class="font-bold text-dark mb-2 text-center">Emily Johnson</h3>
+            <p class="text-gray-600 text-center">Lead Veterinarian</p>
+        </div>
+    </div>    
 
 {% endblock content %}
