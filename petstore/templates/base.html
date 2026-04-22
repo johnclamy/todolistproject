@@ -40,7 +40,7 @@
             <button class="text-8xl self-end px-6">&times;</button>
             <nav class="flex flex-col min-h-screen items-center py-8" aria-label="mobile">
                 <a href="{% url 'core.about' %}" class="w-full text-center py-6 hover:opacity-90">About</a>
-                <a href="" class="w-full text-center py-6 hover:opacity-90">Shop</a>
+                <a href="{% url 'products.list' %}" class="w-full text-center py-6 hover:opacity-90">Shop</a>
                 <a href="" class="w-full text-center py-6 hover:opacity-90">Cart</a>
                 <a href="" class="w-full text-center py-6 hover:opacity-90">Orders</a>
                 <a href="#contact" class="w-full text-center py-6 hover:opacity-90">Contact</a>
@@ -68,7 +68,7 @@
             <nav class="hidden md:flex flex-col gap-2" arial-label="footer">
                 <a href="" class="hover:opacity-90">Home</a>
                 <a href="{% url 'core.about' %}" class="hover:opacity-90">About</a>
-                <a href="" class="hover:opacity-90">Shop</a>                    
+                <a href="{% url 'products.list' %}" class="hover:opacity-90">Shop</a>                    
                 <a href="" class="hover:opacity-90"><i class="fa-solid fa-cart-shopping text-[16px]"></i>&nbsp;Cart</a> 
             </nav>
             <div class="flex flex-col md:gap-2">
