@@ -7,4 +7,4 @@ class Todo(BaseModel):
     id: UUID
     task: str
     is_completed: bool
-    created_at: datetime
+    created_at: str
