@@ -26,3 +26,17 @@ async def get_todo(todo_id: UUID) -> dict[str, Todo]:
 async def post_todo(todo_task: TodoCreate) -> dict[str, Todo]:
     todo = await create_todo(todo_task)
     return {"todo": todo}
+
+
+# Set the endpoint for updating an existing todo item
+@router.put("/{todo_id}")
+async def put_todo(todo_id: UUID, todo_data: TodoUpdate) -> dict[str, Todo]:
+    todo = await update_todo(todo_id, todo_data)
+    return {"todo": todo}
+
+
+# Set the endpoint for deleting a todo item
+@router.delete("/{todo_id}")
+async def delete_todo_endpoint(todo_id: UUID) -> dict[str, bool]:
+    await delete_todo(todo_id)
+    return {"deleted": True}
