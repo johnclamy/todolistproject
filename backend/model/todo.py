@@ -6,5 +6,5 @@ from datetime import datetime
 class Todo(BaseModel):
     id: UUID
     task: str
-    is_completed: bool
+    is_completed: bool = False
     created_at: datetime
