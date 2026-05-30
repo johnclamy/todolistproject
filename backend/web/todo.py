@@ -1,6 +1,6 @@
 from fastapi import APIRouter
 from uuid import UUID
-from model.todo import Todo
+from model.todo import Todo, TodoCreate, TodoUpdate
 from crud.todo import read_todos, read_todo, create_todo, update_todo, delete_todo
 
 
@@ -20,3 +20,9 @@ async def get_todo(todo_id: UUID) -> dict[str, Todo]:
     todo = await read_todo(todo_id)
     return {"todo": todo}
 
+
+# Set the endpoint for creating a new todo item
+@router.post("/")
+async def post_todo(todo: TodoCreate) -> dict[str, Todo]:
+    new_todo = await create_todo(todo)
+    return {"todo": new_todo}
