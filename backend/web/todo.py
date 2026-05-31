@@ -2,21 +2,21 @@ from fastapi import APIRouter, HTTPException
 from uuid import UUID
 from model.todo import Todo, TodoCreate, TodoUpdate
 from crud.todo import read_todos, read_todo, create_todo, update_todo, delete_todo
+from helper.error import handle_exception
 
 
 router = APIRouter(prefix="/api/v1/todos", tags=["todos"])
-no_todos = {"message": "No todos found."}
 
 
 # Set the root endpoint for the todos api
 @router.get("/")
-async def get_todos() -> dict[str, list[Todo]] | dict[str, str]:
+async def get_todos() -> dict[str, list[Todo]] | dict[str, str | int] | None:
     todos = await read_todos()
 
     if todos:
         return {"todo_list": todos}
 
-    return no_todos
+    return await handle_exception("no_todos")
 
 
 # Set the endpoint for getting a single todo item by id
