@@ -1,3 +1,4 @@
+from fastapi import HTTPException
 from model.todo import Todo, TodoCreate, TodoUpdate
 from uuid import UUID, uuid4
 from datetime import datetime
@@ -21,21 +22,30 @@ async def read_todo(todo_id: UUID) -> Todo:
         if todo.id == todo_id:
             return todo
         
-    raise ValueError("Todo not found")
+    raise HTTPException(status_code=404, detail=f"Todo with id {todo_id} not found")
 
 
 async def create_todo(todo_data: TodoCreate) -> Todo:
     # This function will create a new todo item in the database
     # with the provided task and return it as a Todo object.
+    if len(todo_data.task) > 0:
+        task = todo_data.task
+    else:
+        raise HTTPException(status_code=400, detail="Task cannot be empty")
+
+
     todo = Todo(
         id=uuid4(),
-        task=todo_data.task,
+        task=task,
         is_completed=False,
         created_at=datetime.now().isoformat()
     )
-    
-    todos.append(todo)
-    return todo
+
+    if todo:
+        todos.append(todo)
+        return todo
+
+    raise HTTPException(status_code=500, detail="Failed to create todo item")
 
 
 async def update_todo(todo_id: UUID, todo_data: TodoUpdate) -> Todo:
@@ -47,8 +57,8 @@ async def update_todo(todo_id: UUID, todo_data: TodoUpdate) -> Todo:
             todo.task = todo_data.task
             todo.is_completed = todo_data.is_completed
             return todo
-        
-    raise ValueError("Todo not found")
+
+    raise HTTPException(status_code=400, detail=f"Update did not take effect for todo with id {todo_id}")
 
 
 async def delete_todo(todo_id: UUID) -> None:
@@ -58,5 +68,5 @@ async def delete_todo(todo_id: UUID) -> None:
         if todo.id == todo_id:
             del todos[i]
             return
-        
-    raise ValueError("Todo not found")
+
+    raise HTTPException(status_code=404, detail=f"Todo with id {todo_id} not found")
