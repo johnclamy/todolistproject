@@ -29,7 +29,7 @@
         <main class="mt-8">
 
             <!-- Input form for adding new todos -->
-            <div class="bg-white rounded-2xl shadow-xl p-6 mb-8">
+            <section class="bg-white rounded-2xl shadow-xl p-6 mb-8">
                 <form @submit.prevent="addTodo" class="flex flex-col sm:flex-row gap-3 items-center">
                     <input
                         type="text"
@@ -39,7 +39,16 @@
                     >
                     <button type="submit" class="w-full sm:w-auto px-4 py-2 bg-blue-600 text-white rounded-lg hover:bg-blue-700 transition-colors duration-300">Add</button>
                 </form>
-            </div>
+            </section>
+
+            <!-- Stats -->
+            <section class="px-6 py-4 bg-gray-50 border-b border-gray-200 flex items-center justify-between">
+                <div class="flex gap-4 text-sm">
+                    <span class="text-gray-600">Total: <span class="font-semibold" x-text="todos.length"></span></span>
+                    <span class="text-green-600">Completed: <span class="font-semibold" x-text="completedCount"></span></span>
+                    <span class="text-yellow-600">Pending: <span class="font-semibold" x-text="pendingCount"></span></span>
+                </div>
+            </section>
 
         </main>
     </div>
