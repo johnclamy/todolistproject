@@ -28,15 +28,13 @@ async def read_todo(todo_id: UUID) -> Todo:
 async def create_todo(todo_data: TodoCreate) -> Todo:
     # This function will create a new todo item in the database
     # with the provided task and return it as a Todo object.
-    if len(todo_data.task) > 0:
-        task = todo_data.task
-    else:
+    if len(todo_data.task) == 0:
         raise HTTPException(status_code=400, detail="Task cannot be empty")
 
 
     todo = Todo(
         id=uuid4(),
-        task=task,
+        task=todo_data.task,
         is_completed=False,
         created_at=datetime.now().isoformat()
     )
@@ -52,6 +50,9 @@ async def update_todo(todo_id: UUID, todo_data: TodoUpdate) -> Todo:
     # This function will update an existing todo item in the database
     # based on the provided id, task, and is_completed values, and return
     # the updated item as a Todo object.
+    if len(todo_data.task) == 0:
+        raise HTTPException(status_code=400, detail="Task cannot be empty")
+
     for todo in todos:
         if todo.id == todo_id:
             todo.task = todo_data.task
