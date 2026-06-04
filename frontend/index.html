@@ -6,17 +6,12 @@
     <script defer src="https://cdn.jsdelivr.net/npm/alpinejs@3.x.x/dist/cdn.min.js"></script>
     <link rel="stylesheet" href="./src/style.css">
     <title>Todo App</title>
-    <style>
+    <!-- <style>
         [x-cloak] { display: none !important; }
-    </style>
+    </style> -->
 </head>
 <body class="bg-linear-to-br from-blue-50 to-purple-50 min-h-screen">
-    <div
-        class="container mx-auto px-4 py-8 max-w-3xl"
-        x-data="todoApp()"
-        x-init="init()"
-        x-cloak
-    >
+    <div class="container mx-auto px-4 py-6 max-w-3xl">
         <!-- App header and its wrapper -->
         <div class="bg-white rounded-2xl shadow-xl overflow-hidden">
             <header class="bg-linear-to-r from-blue-600 to-purple-600 px-6 py-8">
@@ -26,30 +21,64 @@
         </div>
 
         <!-- Main content area -->
-        <main class="mt-8">
+        <main class="mt-6 sm:mt-8">
 
             <!-- Input form for adding new todos -->
             <section class="bg-white rounded-2xl shadow-xl p-6 mb-8">
-                <form @submit.prevent="addTodo" class="flex flex-col sm:flex-row gap-3 items-center">
+                <form class="flex flex-col sm:flex-row gap-3 items-center">
                     <input
                         type="text"
-                        x-model="newTodo"
                         placeholder="What do you need to do?"
                         class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
                     >
-                    <button type="submit" class="w-full sm:w-auto px-4 py-2 bg-blue-600 text-white rounded-lg hover:bg-blue-700 transition-colors duration-300">Add</button>
+                    <button type="submit" class="w-full sm:w-auto px-4 py-2 bg-blue-600 text-white rounded-lg hover:bg-blue-700 transition-colors duration-300 cursor-pointer">
+                        Add
+                    </button>
                 </form>
             </section>
 
             <!-- Stats -->
-            <section class="px-6 py-4 bg-gray-50 border-b border-gray-200 flex items-center justify-between">
+            <section class="px-6 py-4 bg-gray-50 border-b border-gray-200 flex items-center flex-col sm:flex-row sm:justify-between">
                 <div class="flex gap-4 text-sm">
                     <span class="text-gray-600">Total: <span class="font-semibold" x-text="todos.length"></span></span>
                     <span class="text-green-600">Completed: <span class="font-semibold" x-text="completedCount"></span></span>
                     <span class="text-yellow-600">Pending: <span class="font-semibold" x-text="pendingCount"></span></span>
                 </div>
+                <button
+                    @click="clearAll"
+                    class="mt-4 sm:mt-0 px-4 py-2 bg-red-600 text-white rounded-lg hover:bg-red-700 transition-colors duration-300 cursor-pointer">
+                    Delete All
+                </button>
             </section>
 
+            <!-- Loading state -->
+            <!-- <div x-show="loading" class="flex justify-center items-center py-10 gap-4">
+                <svg class="animate-spin h-8 w-8 text-blue-600" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24">
+                    <circle class="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" stroke-width="4"></circle>
+                    <path class="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"></path>
+                </svg>
+                <p class="text-gray-500 mt-2">Loading todos...</p>
+            </div> -->
+
+            <!-- Todo list section goes here... -->
+            
+
+            <!-- Empty state -->
+            <section x-show="todos.length === 0 && !loading" class="px-6 py-12 text-center">
+                <svg class="mx-auto h-16 w-16 text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5H7a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2V7a2 2 0 00-2-2h-2M9 5a2 2 0 002 2h2a2 2 0 002-2M9 5a2 2 0 012-2h2a2 2 0 012 2"></path>
+                </svg>
+                <p class="text-gray-500 mt-4 text-lg">No todos yet!</p>
+                <p class="text-gray-400">Add your first todo above ✨</p>
+            </section>
+
+            <!-- Error Message -->
+            <!-- <div
+                x-show="errorMessage" 
+                x-transition.duration.300ms
+                class="fixed bottom-4 right-4 bg-red-500 text-white px-6 py-3 rounded-lg shadow-lg">
+            <span x-text="errorMessage"></span> -->
+        </div>
         </main>
     </div>
 </body>
