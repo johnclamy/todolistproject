@@ -49,24 +49,25 @@
                     <span class="text-green-600">Completed: <span class="font-semibold" x-text="completedCount"></span></span>
                     <span class="text-yellow-600">Pending: <span class="font-semibold" x-text="pendingCount"></span></span>
                 </div>
-                <!-- <button
+                <button
                     @click="clearAll"
+                    x-show="todos.length > 0"
                     class="mt-4 sm:mt-0 px-4 py-2 bg-red-600 text-white rounded-lg hover:bg-red-700 transition-colors duration-300 cursor-pointer">
                     Delete All
-                </button> -->
+                </button>
             </section>
 
             <!-- Loading state -->
-            <!-- <div x-show="loading" class="flex justify-center items-center py-10 gap-4">
+            <div x-show="loading" class="flex justify-center items-center py-10 gap-4">
                 <svg class="animate-spin h-8 w-8 text-blue-600" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24">
                     <circle class="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" stroke-width="4"></circle>
                     <path class="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"></path>
                 </svg>
                 <p class="text-gray-500 mt-2">Loading todos...</p>
-            </div> -->
+            </div>
 
             <!-- Todo list -->
-            <article class="px-6 py-4 border-b border-gray-200 divide-y divide-gray-200">
+            <article x-show="!loading" class="px-6 py-4 border-b border-gray-200 divide-y divide-gray-200">
                 <template x-for="todo in todos" :key="todo.id">
                     <div class="px-6 py-4 hover:bg-gray-50 transition-colors duration-200 group">
                         <div class="flex items-center gap-3">
@@ -75,14 +76,27 @@
                             <input
                                 type="checkbox"
                                 :checked="todo.is_completed"
-                                @change="toggleTodo(todo.id)"
+                                @change="toggleCheckbox(todo.id)"
                                 class="w-5 h-5 text-blue-600 rounded focus:ring-blue-500 cursor-pointer"
                             >
 
                             <!-- Todo text -->
                             <div class="flex-1">
-                                <span x-show="!editingTodoId === todo.id" x-text="todo.task" :class="{'line-through text-gray-400': todo.status, 'text-gray-800': !todo.status}" class="text-lg break-all"></span>
-                                <input type="text" x-show="editingTodoId === todo.id" x-model="editTodoText" @keyup.enter="saveEdit(todo.id)" @keyup.escape="cancelEdit" class="w-full px-2 py-1 border border-gray-300 rounded focus:outline-none focus:ring-2 focus:ring-blue-500" x-ref="editInput">
+                                <span
+                                    x-show="!editingTodoId === todo.id"
+                                    x-text="todo.task"
+                                    :class="{'line-through text-gray-400': todo.status, 'text-gray-800': !todo.status}"
+                                    class="text-lg break-all">
+                                </span>
+                                <input
+                                    type="text"
+                                    x-show="editingTodoId === todo.id"
+                                    x-model="editTodoText"
+                                    @keyup.enter="saveEdit(todo.id)"
+                                    @keyup.escape="cancelEdit"
+                                    x-ref="editInput"
+                                    class="w-full px-2 py-1 border border-gray-300 rounded focus:outline-none focus:ring-2 focus:ring-blue-500"
+                                >
                             </div>
 
                             <!-- Action btns -->
