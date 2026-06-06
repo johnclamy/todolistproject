@@ -24,8 +24,27 @@ document.addEventListener('alpine:init', () => {
             return this.todos.filter(t => !t.status).length;
         },
 
-        // Toggle todo status
-        async toggleTodo(id) {},
+        // Toggle todo checkbox status
+        async toggleCheckbox(id) {
+            const todo = this.todos.find(t => t.id === id);
+            if (!todo) return;
+            
+            try {
+                const response = await fetch(`http://localhost:8000/todos/${id}`, {
+                    method: 'PUT',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({ status: !todo.status })
+                });
+                
+                if (!response.ok) throw new Error('Failed to update todo');
+                
+                const updatedTodo = await response.json();
+                const index = this.todos.findIndex(t => t.id === id);
+                this.todos[index] = updatedTodo;
+            } catch (error) {
+                this.showError('Error updating todo: ' + error.message);
+            }
+        },
 
         // Start editing
         startEdit(id, task) {
@@ -62,6 +81,23 @@ document.addEventListener('alpine:init', () => {
             } catch (error) {
                 this.showError('Error updating todo: ' + error.message);
             }
+        },
+
+        // Delete all todos
+        async clearAll() {
+            if (!confirm('Are you sure you want to delete ALL todos? This action cannot be undone!')) return;
+            
+            // try {
+            //     const response = await fetch('http://localhost:8000/todos', {
+            //         method: 'DELETE'
+            //     });
+                
+            //     if (!response.ok) throw new Error('Failed to delete all todos');
+                
+            //     this.todos = [];
+            // } catch (error) {
+            //     this.showError('Error deleting todos: ' + error.message);
+            // }
         },
 
         // Format date
