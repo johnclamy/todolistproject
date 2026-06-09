@@ -3,14 +3,13 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <script defer src="https://cdn.jsdelivr.net/npm/alpinejs@3.x.x/dist/cdn.min.js"></script>
     <link rel="stylesheet" href="./src/style.css">
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <title>Todo App</title>
-    <style>[x-cloak] { display: none !important; }</style>
 </head>
 <body class="bg-linear-to-br from-blue-50 to-purple-50 min-h-screen">
     <!-- Page container -->
-    <div x-data="todoApp" x-cloak class="container mx-auto px-4 py-6 max-w-3xl">
+    <div class="container mx-auto px-4 py-6 max-w-3xl">
 
         <!-- Page header -->
         <header class="bg-white rounded-2xl shadow-xl overflow-hidden">
@@ -25,10 +24,9 @@
 
             <!-- Input form for adding new todos -->
             <section class="bg-white rounded-2xl shadow-xl p-6 mb-8 border-b border-gray-200">
-                <form @submit.prevent="addTodo" class="flex flex-col sm:flex-row gap-3 items-center">
+                <form class="flex flex-col sm:flex-row gap-3 items-center">
                     <input
                         type="text"
-                        x-model="newTodoTask"
                         placeholder="What do you need to do?"
                         class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
                         required
@@ -45,101 +43,26 @@
             <!-- Stats -->
             <section class="px-6 py-4 bg-gray-50 border-b border-gray-200 flex items-center flex-col sm:flex-row sm:justify-between">
                 <div class="flex gap-4 text-sm">
-                    <span class="text-gray-600">Total: <span class="font-semibold" x-text="todos.length"></span></span>
-                    <span class="text-green-600">Completed: <span class="font-semibold" x-text="completedCount"></span></span>
-                    <span class="text-yellow-600">Pending: <span class="font-semibold" x-text="pendingCount"></span></span>
+                    <span class="text-gray-600">Total: <span class="font-semibold"></span></span>
+                    <span class="text-green-600">Completed: <span class="font-semibold"></span></span>
+                    <span class="text-yellow-600">Pending: <span class="font-semibold"></span></span>
                 </div>
                 <button
-                    @click="clearAll"
-                    x-show="todos.length > 0"
                     class="mt-4 sm:mt-0 px-4 py-2 bg-red-600 text-white rounded-lg hover:bg-red-700 transition-colors duration-300 cursor-pointer">
                     Delete All
                 </button>
             </section>
 
             <!-- Loading state -->
-            <div x-show="loading" class="flex justify-center items-center py-10 gap-4">
+            <!-- <div class="flex justify-center items-center py-10 gap-4">
                 <svg class="animate-spin h-8 w-8 text-blue-600" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24">
                     <circle class="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" stroke-width="4"></circle>
                     <path class="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"></path>
                 </svg>
                 <p class="text-gray-500 mt-2">Loading todos...</p>
-            </div>
+            </div> -->
 
             <!-- Todo list -->
-            <article x-show="!loading" class="px-6 py-4 border-b border-gray-200 divide-y divide-gray-200">
-                <template x-for="todo in todos" :key="todo.id">
-                    <div class="px-6 py-4 hover:bg-gray-50 transition-colors duration-200 group">
-                        <div class="flex items-center gap-3">
-
-                            <!-- Checkbox -->
-                            <input
-                                type="checkbox"
-                                :checked="todo.is_completed"
-                                @change="toggleCheckbox(todo.id)"
-                                class="w-5 h-5 text-blue-600 rounded focus:ring-blue-500 cursor-pointer"
-                            >
-
-                            <!-- Todo text -->
-                            <div class="flex-1">
-                                <span
-                                    x-show="!editingTodoId === todo.id"
-                                    x-text="todo.task"
-                                    :class="{'line-through text-gray-400': todo.status, 'text-gray-800': !todo.status}"
-                                    class="text-lg break-all">
-                                </span>
-                                <input
-                                    type="text"
-                                    x-show="editingTodoId === todo.id"
-                                    x-model="editTodoText"
-                                    @keyup.enter="saveEdit(todo.id)"
-                                    @keyup.escape="cancelEdit"
-                                    x-ref="editInput"
-                                    class="w-full px-2 py-1 border border-gray-300 rounded focus:outline-none focus:ring-2 focus:ring-blue-500"
-                                >
-                            </div>
-
-                            <!-- Action btns -->
-                            <div class="flex gap-2 opacity-0 group-hover:opacity-100 transition-opacity duration-200">
-                                <template x-if="!editingTodoId === todo.id">
-                                    <button
-                                        @click="startEdit(todo.id, todo.task)"
-                                        class="text-blue-600 hover:text-blue-800 p-1"
-                                    >
-                                        <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M11 5H6a2 2 0 00-2 2v11a2 2 0 002 2h11a2 2 0 002-2v-5m-1.414-9.414a2 2 0 112.828 2.828L11.828 15H9v-2.828l8.586-8.586z"></path>
-                                        </svg>
-                                    </button>
-                                </template>
-
-                                <template x-if="editingTodoId === todo.id">
-                                    <button
-                                        @click="saveEdit(todo.id)"
-                                        class="text-green-600 hover:text-green-800 p-1">
-                                        <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path>
-                                        </svg>
-                                    </button>
-                                </template>
-
-                                <button
-                                    @click="deleteTodo(todo.id)"
-                                    class="text-red-600 hover:text-red-800 p-1 cursor-pointer">
-                                    <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16"></path>
-                                    </svg>
-                                </button>
-                            </div>
-                        </div>
-                        <div
-                            x-show="!editingTodoId === todo.id"
-                            class="text-xs text-gray-400 mt-1 ml-8"
-                        >
-                            Created: <span x-text="formatDate(todo.created_at)"></span>
-                        </div>                      
-                    </div>
-                </template>
-            </article>
 
             <!-- Empty state -->
             <!-- <section class="px-6 py-12 text-center">
