@@ -12,7 +12,12 @@
     "vite": "^8.0.12"
   },
   "dependencies": {
+    "@alpinejs/focus": "^3.15.12",
+    "@alpinejs/persist": "^3.15.12",
     "@tailwindcss/vite": "^4.3.0",
-    "tailwindcss": "^4.3.0"
+    "alpinejs": "^3.15.12",
+    "axios": "^1.17.0",
+    "tailwindcss": "^4.3.0",
+    "uuid": "^14.0.0"
   }
 }
