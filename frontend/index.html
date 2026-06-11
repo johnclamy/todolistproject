@@ -108,7 +108,10 @@
                 </article>
 
                 <!-- Empty State -->
-                <div class="text-center py-8 text-gray-500">
+                <div 
+                    x-show="$store.todoStore.todos.length === 0" 
+                    class="text-center py-8 text-gray-500"
+                >
                     <i class="fas fa-check-circle text-4xl mb-2"></i>
                     <p>No todos found</p>
                 </div>
