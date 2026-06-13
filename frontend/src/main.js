@@ -15,14 +15,14 @@ Alpine.plugin(focus)
 // Filters for todo list (used in the UI to filter displayed todos)
 const FILTERS = {
     all: () => true,
-    active: (todo) => !todo.completed,
-    completed: (todo) => todo.completed
+    active: (todo) => !todo.isCompleted,
+    inactive: (todo) => todo.isCompleted
 }
 
 
 // Store-based approach (Recommended)
 document.addEventListener('alpine:init', () => {
-    Alpine.store('todoStore', { 
+    Alpine.store('todoStore', {
         todos: [
             {
                 id: 1,
@@ -37,10 +37,52 @@ document.addEventListener('alpine:init', () => {
                 createdAt: "2026-05-02T12:00:00Z"
             }
         ],
-        
+
+
         isLoading: false,
         error: null,
         filter: FILTERS.all,
+
+
+        // Computed properties
+        get filteredTodos() {
+            if (this.filter === FILTERS.active) {
+                return this.todos.filter(this.filter)
+            }
+            
+            else if (this.filter === FILTERS.inactive) {
+                return this.todos.filter(this.filter)
+            }
+
+            return this.todos
+        },
+
+        get activeCount() {
+            return this.todos.filter(FILTERS.active).length
+        },
+
+        get completedCount() {
+            return this.todos.filter(FILTERS.inactive).length
+        },
+
+
+        async toggleTodo(todo) {
+            const updatedTodo = {
+                ...todo,
+                isCompleted: !todo.isCompleted
+            }
+
+            this.todos = this.todos.map(t => t.id === todo.id ? updatedTodo : t)
+        },
+
+        async deleteTodo(id) {
+            this.todos = this.todos.filter(todo => todo.id !== id)
+        },
+
+
+        setFilter(filter) {
+            this.filter = filter
+        }
     })
 })
 
