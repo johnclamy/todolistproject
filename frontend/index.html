@@ -59,13 +59,25 @@
 
                 <!-- Filter Tabs -->
                 <div class="flex gap-2 mb-6 border-b">
-                    <button class="px-4 py-2 border-b-2 border-transparent hover:border-gray-300 transition">
+                    <button
+                        @click="$store.todoStore.setFilter($store.todoStore.filter.all)"
+                        :class="{'border-blue-500 text-blue-600': $store.todoStore.filter === 'all'}"
+                        class="px-4 py-2 border-b-2 border-transparent hover:border-gray-300 transition"                        
+                    >
                         All
                     </button>
-                    <button class="px-4 py-2 border-b-2 border-transparent hover:border-gray-300 transition">
+                    <button
+                        @click="$store.todoStore.setFilter($store.todoStore.filter.active)"
+                        :class="{'border-blue-500 text-blue-600': $store.todoStore.filter === 'active'}"
+                        class="px-4 py-2 border-b-2 border-transparent hover:border-gray-300 transition"
+                    >
                         Active
                     </button>
-                    <button class="px-4 py-2 border-b-2 border-transparent hover:border-gray-300 transition">
+                    <button
+                        @click="$store.todoStore.setFilter($store.todoStore.filter.inactive)"
+                        :class="{'border-blue-500 text-blue-600': $store.todoStore.filter === 'inactive'}"
+                        class="px-4 py-2 border-b-2 border-transparent hover:border-gray-300 transition"
+                    >
                         Completed
                     </button>
                 </div>
