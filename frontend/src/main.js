@@ -66,6 +66,27 @@ document.addEventListener('alpine:init', () => {
         },
 
 
+        // API methods
+        async fetchTodos() {},
+
+
+        async addTodo(task) {
+            if (!task.trim()) {
+                this.error = 'Task cannot be empty'
+                return
+            }
+
+            const newTodo = {
+                id: Date.now(),
+                task: task.trim(),
+                isCompleted: false,
+                createdAt: new Date().toISOString()
+            }
+
+            this.todos.push(newTodo)
+        },
+
+
         async toggleTodo(todo) {
             const updatedTodo = {
                 ...todo,
