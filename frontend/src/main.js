@@ -1,6 +1,7 @@
 import Alpine from 'alpinejs'
 import persist from '@alpinejs/persist'
 import focus from '@alpinejs/focus'
+import { v4 as uuidv4 } from 'uuid'
 
 
 // Register plugins
@@ -8,7 +9,6 @@ Alpine.plugin(persist)
 Alpine.plugin(focus)
 
 
-// API URL (adjust as needed)
 // const API_URL = 'http://localhost:3000/api/todos/'
 
 
@@ -24,14 +24,15 @@ const FILTERS = {
 document.addEventListener('alpine:init', () => {
     Alpine.store('todoStore', {
         todos: [
+            // Example todos (replaced by the fetch api)
             {
-                id: 1,
+                id: uuidv4(),
                 task: 'ride a bike',
                 isCompleted: false,
                 createdAt: "2026-05-01T10:00:00Z"
             },
             {
-                id: 2,
+                id: uuidv4(),
                 task: 'go to the gym',
                 isCompleted: true,
                 createdAt: "2026-05-02T12:00:00Z"
