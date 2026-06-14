@@ -40,7 +40,7 @@ document.addEventListener('alpine:init', () => {
 
 
         isLoading: false,
-        error: null,
+        error: null,        
         filter: FILTERS.all,
 
 
@@ -98,6 +98,15 @@ document.addEventListener('alpine:init', () => {
 
         async deleteTodo(id) {
             this.todos = this.todos.filter(todo => todo.id !== id)
+        },
+
+
+        async deleteCompleted() {
+            this.todos = this.todos.filter(todo => !todo.isCompleted)
+        },
+
+        async deleteAll() {
+            this.todos = []
         },
 
 
