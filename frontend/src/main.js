@@ -2,6 +2,7 @@ import Alpine from 'alpinejs'
 import persist from '@alpinejs/persist'
 import focus from '@alpinejs/focus'
 import { v4 as uuidv4 } from 'uuid'
+import axios from 'axios'
 
 
 // Register plugins
@@ -9,7 +10,7 @@ Alpine.plugin(persist)
 Alpine.plugin(focus)
 
 
-// const API_URL = 'http://localhost:3000/api/todos/'
+const API_URL = 'http://localhost:8000/api/v1/todos'
 
 
 // Filters for todo list (used in the UI to filter displayed todos)
@@ -25,34 +26,34 @@ document.addEventListener('alpine:init', () => {
     Alpine.store('todoStore', {
         todos: [
             // Example todos (replaced by the fetch api)
-            {
-                id: uuidv4(),
-                task: 'ride a bike',
-                isCompleted: false,
-                createdAt: "2026-05-01T10:00:00Z"
-            },
-            {
-                id: uuidv4(),
-                task: 'go to the gym',
-                isCompleted: true,
-                createdAt: "2026-05-02T12:00:00Z"
-            }
+            // {
+            //     id: uuidv4(),
+            //     task: 'ride a bike',
+            //     isCompleted: false,
+            //     createdAt: "2026-05-01T10:00:00Z"
+            // },
+            // {
+            //     id: uuidv4(),
+            //     task: 'go to the gym',
+            //     isCompleted: true,
+            //     createdAt: "2026-05-02T12:00:00Z"
+            // }
         ],
 
 
         isLoading: false,
         error: null,        
-        filter: FILTERS.all,
+        curFilter: FILTERS.all,
 
 
         // Computed properties
         get filteredTodos() {
-            if (this.filter === FILTERS.active) {
-                return this.todos.filter(this.filter)
+            if (this.curFilter === FILTERS.active) {
+                return this.todos.filter(this.curFilter)
             }
             
-            else if (this.filter === FILTERS.inactive) {
-                return this.todos.filter(this.filter)
+            else if (this.curFilter === FILTERS.inactive) {
+                return this.todos.filter(this.curFilter)
             }
 
             return this.todos
@@ -68,7 +69,35 @@ document.addEventListener('alpine:init', () => {
 
 
         // API methods
-        async fetchTodos() {},
+        async fetchTodos() {
+            this.isLoading = true
+            this.error = null
+
+            try {
+                const res = await axios.get(API_URL)
+                const data = res.data
+                console.log('Axios response.data:', data)
+                console.log('Is array?', Array.isArray(data))
+
+                // Handle both array and object responses
+                if (Array.isArray(data)) {
+                    this.todos = data
+                } else if (data.todos && Array.isArray(data.todos)) {
+                    this.todos = data.todos
+                } else {
+                    this.todos = []
+                }
+
+            } catch (err) {
+                this.error = 'Failed to fetch todos'
+                console.log('Fetch error:', err)
+                this.todos = []
+                
+            } finally {
+                this.isLoading = false
+                console.log('fetched todos: ', this.todos)
+            }
+        },
 
 
         async addTodo(task) {
@@ -112,7 +141,7 @@ document.addEventListener('alpine:init', () => {
 
 
         setFilter(filter) {
-            this.filter = filter
+            this.curFilter = filter
         }
     })
 })
