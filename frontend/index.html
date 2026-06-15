@@ -11,9 +11,9 @@
     </style>
 </head>
 <body class="bg-gray-100">
-    <div class="container mx-auto px-4 pt-4 pb-8 max-w-2xl" x-data>
+    <div class="container mx-auto px-4 pt-4 pb-8 max-w-2xl">
         <!-- Using store-based approach (recommended) -->
-        <div x-data>
+        <div x-data x-init="$store.todoStore.fetchTodos()">
 
             <!-- Page header -->
             <header class="bg-gradient-to-r from-blue-600 to-purple-600 px-6 py-8">
@@ -94,8 +94,7 @@
                                     <span
                                         x-text="todo.task"
                                         :class="{'line-through text-gray-500': todo.isCompleted}"
-                                        class="text-gray-800"
-                                        
+                                        class="text-gray-800"                                        
                                     ></span>
                 
                                 </div>
