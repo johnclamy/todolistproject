@@ -43,17 +43,17 @@ document.addEventListener('alpine:init', () => {
 
         isLoading: false,
         error: null,        
-        curFilter: FILTERS.all,
+        currFilter: FILTERS.all,
 
 
         // Computed properties
         get filteredTodos() {
-            if (this.curFilter === FILTERS.active) {
-                return this.todos.filter(this.curFilter)
+            if (this.currFilter === FILTERS.active) {
+                return this.todos.filter(this.currFilter)
             }
             
-            else if (this.curFilter === FILTERS.inactive) {
-                return this.todos.filter(this.curFilter)
+            else if (this.currFilter === FILTERS.inactive) {
+                return this.todos.filter(this.currFilter)
             }
 
             return this.todos
@@ -76,8 +76,8 @@ document.addEventListener('alpine:init', () => {
             try {
                 const res = await axios.get(API_URL)
                 const data = res.data
-                console.log('Axios response.data:', data)
-                console.log('Is array?', Array.isArray(data))
+                // console.log('Axios response.data:', data)
+                // console.log('Is array?', Array.isArray(data))
 
                 // Handle both array and object responses
                 if (Array.isArray(data)) {
@@ -101,19 +101,28 @@ document.addEventListener('alpine:init', () => {
 
 
         async addTodo(task) {
-            if (!task.trim()) {
+            const trimmedTask = task.trim()
+
+            if (!trimmedTask) {
                 this.error = 'Task cannot be empty'
                 return
             }
 
             const newTodo = {
-                id: Date.now(),
-                task: task.trim(),
+                id: uuidv4(),
+                task: trimmedTask,
                 isCompleted: false,
                 createdAt: new Date().toISOString()
             }
 
-            this.todos.push(newTodo)
+            // this.todos.push(newTodo)
+            try {
+                const res = await axios.post(API_URL, newTodo)
+                this.todos = [...this.todos, res.data]
+            } catch (err) {
+                this.error = 'Failed to add todo'
+                console.log('Add todo error:', err)
+            }
         },
 
 
@@ -123,11 +132,19 @@ document.addEventListener('alpine:init', () => {
                 isCompleted: !todo.isCompleted
             }
 
-            this.todos = this.todos.map(t => t.id === todo.id ? updatedTodo : t)
+            const res = await axios.put(`${API_URL}/${todo.id}`, updatedTodo)
+            this.todos = this.todos.map(t => t.id === todo.id ? res.data : t)
         },
 
+
         async deleteTodo(id) {
-            this.todos = this.todos.filter(todo => todo.id !== id)
+            try {
+                await axios.delete(`${API_URL}/${id}`)
+                this.todos = this.todos.filter(todo => todo.id !== id)
+            } catch (err) {
+                this.error = 'Failed to delete todo'
+                console.log('Delete todo error:', err)
+            }
         },
 
 
@@ -141,7 +158,7 @@ document.addEventListener('alpine:init', () => {
 
 
         setFilter(filter) {
-            this.curFilter = filter
+            this.currFilter = filter
         }
     })
 })
