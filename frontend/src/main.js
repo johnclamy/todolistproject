@@ -132,8 +132,13 @@ document.addEventListener('alpine:init', () => {
                 isCompleted: !todo.isCompleted
             }
 
-            const res = await axios.put(`${API_URL}/${todo.id}`, updatedTodo)
-            this.todos = this.todos.map(t => t.id === todo.id ? res.data : t)
+            try {
+                const res = await axios.put(`${API_URL}/${todo.id}`, updatedTodo)
+                this.todos = this.todos.map(t => t.id === todo.id ? res.data : t)
+            } catch (err) {
+                this.error = 'Failed to update todo'
+                console.log('Update todo error:', err)
+            }
         },
 
 
