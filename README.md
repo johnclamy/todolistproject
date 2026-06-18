@@ -2,9 +2,11 @@
 
 ## Backend: FastAPI
 
+TO BE ADDED SOON...
+
 ## Alpine.js & Axios Todo Frontend
 
-A lightweight, modern single-page frontend built to consume a Todo REST API (provided by  **FastAPI**, see backend reference above). This project demonstrates state management using **Alpine.js** global stores coupled with **Axios** for asynchronous data fetching.
+A lightweight, modern single-page frontend built to consume a Todo REST API (provided by  **FastAPI**, see backend reference above). This section demonstrates state management using **Alpine.js** global stores coupled with **Axios** for asynchronous data fetching.
 
 ### 🚀 Features
 
@@ -18,8 +20,18 @@ A lightweight, modern single-page frontend built to consume a Todo REST API (pro
 
 * **Multi-Page Scalability:** Architecture is primed for expansion—demonstrating how global stores can easily be modularized and persisted across multiple pages using browser storage (`localStorage`).
 
-### 📦 Prerequisites
+### 🛠️ Development with Vite
 
-Ensure you have a backend server running locally on port 8000 (see backend section) that exposes the following endpoint:
+This project is bundled and served using **Vite**, ensuring blazing-fast Hot Module Replacement (HMR) and an optimized development experience.
 
-* `GET http://localhost:8000/api/v1/todos`
+#### 📦 Installation & Setup
+
+1. **Once you have the repository ready (see Backend section), navigate into it:**
+
+```bash
+   cd frontend
+
+   npm run dev
+   ```
+
+   Vite will spin up the frontend. Point your browser to: **`http://localhost:5173`**
