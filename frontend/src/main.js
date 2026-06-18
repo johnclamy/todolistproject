@@ -154,11 +154,26 @@ document.addEventListener('alpine:init', () => {
 
 
         async deleteCompleted() {
-            this.todos = this.todos.filter(todo => !todo.isCompleted)
+            const completedIds = this.todos.filter(todo => !todo.isCompleted).map(todo => todo.id)
+
+            try {
+                await Promise.all(completedIds.map(id => this.deleteTodo(id)))
+                this.todos = this.todos.filter(todo => todo.isCompleted)
+            } catch (err) {
+                this.error = 'Failed to delete completed todos'
+                console.log('Delete completed todos error:', err)
+            }
         },
 
+
         async deleteAll() {
-            this.todos = []
+            try {
+                await Promise.all(this.todos.map(todo => this.deleteTodo(todo.id)))
+                this.todos = []
+            } catch (err) {
+                this.error = 'Failed to delete all todos'
+                console.log('Delete all todos error:', err)
+            }
         },
 
 
